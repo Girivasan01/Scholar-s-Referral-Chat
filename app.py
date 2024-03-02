@@ -9,18 +9,17 @@ from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import css, bot_template, user_template
-import openai  # Add this line
+import openai  
 
-# Load environment variables
 load_dotenv()
 
-# Retrieve OpenAI API key
+
 openai_api_key = os.getenv("OPENAI_API_KEY")
 if openai_api_key is None:
     st.error("OpenAI API key is missing. Please provide it in the .env file.")
     st.stop()
 
-# Set the OpenAI API key
+
 openai.api_key = openai_api_key
 
 def get_pdf_text(pdf_docs):
@@ -98,16 +97,16 @@ def main():
         if st.button("Process"):
             with st.spinner("Processing"):
                 try:
-                    # get pdf text
+                    
                     raw_text = get_pdf_text(pdf_docs)
     
-                    # get the text chunks
+                   
                     text_chunks = get_text_chunks(raw_text)
     
-                    # create vector store
+                   
                     vectorstore = get_vectorstore(text_chunks)
     
-                    # create conversation chain
+                   
                     st.session_state.conversation = get_conversation_chain(
                         vectorstore)
                 except Exception as e:
